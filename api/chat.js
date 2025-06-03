@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -21,13 +21,13 @@ export default async function handler(req, res) {
             parts: [
               {
                 text: `You are a helpful assistant for Karpagam College of Engineering (KCE). Only answer KCE-related questions.\n\nUser: ${userMessage}`
-              },
-            ],
-          },
-        ],
+              }
+            ]
+          }
+        ]
       },
       {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json' }
       }
     );
 
