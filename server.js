@@ -11,11 +11,11 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(cors({ origin: process.env.CORS_ORIGIN || '*' }));
 app.use(express.json());
-app.use(express.static('public')); // Serve index.html from /public
+app.use(express.static('.')); // Serve index.html from /public
 
 // Routes
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.post('/api/chat', async (req, res) => {
