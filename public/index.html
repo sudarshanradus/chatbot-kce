@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KCE Chatbot</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 600px; margin: 2rem auto; padding: 1rem; background: #f4f4f4; }
+    h1 { color: #333; }
+    textarea, button { width: 100%; margin-top: 1rem; padding: 10px; font-size: 16px; }
+    #response { white-space: pre-wrap; background: #fff; padding: 1rem; margin-top: 1rem; border: 1px solid #ddd; }
+  </style>
+</head>
+<body>
+  <h1>🎓 KCE Chatbot</h1>
+  <textarea id="question" rows="4" placeholder="Ask your question..."></textarea>
+  <button onclick="askChatbot()">Send</button>
+  <div id="response"></div>
+
+  <script>
+    async function askChatbot() {
+      const question = document.getElementById('question').value;
+      if (!question.trim()) return;
+
+      document.getElementById('response').innerText = '⏳ Waiting for response...';
+
+      try {
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: question })
+        });
+
+        const data = await res.json();
+        if (data.reply) {
+          document.getElementById('response').innerText = data.reply;
+        } else {
+          document.getElementById('response').innerText = '❌ Error: No reply received.';
+        }
+      } catch (error) {
+        console.error(error);
+        document.getElementById('response').innerText = '❌ Error contacting backend.';
+      }
+    }
+  </script>
+</body>
+</html>
